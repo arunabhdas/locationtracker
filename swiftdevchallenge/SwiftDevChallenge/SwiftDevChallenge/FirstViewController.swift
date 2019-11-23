@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     private let selectedCharacterVariable = Variable("User")
     
@@ -23,8 +23,9 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     private let footerId = "footerId"
     private let cellIdentifier = "CupcakeItemCell"
     
+    var placesResponse: PlacesResponse!
     
-    var placesList: [Place] = [Place]() {
+    var predictionsList: [Prediction] = [Prediction]() {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -34,7 +35,14 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-
+    var searchTextField: UITextField!
+    
+    var searchString: String! = "" {
+        didSet {
+            
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,12 +59,13 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         
         //Text Label
-        let textLabel = UITextField()
-        textLabel.backgroundColor = UIColor.lightGray
-        textLabel.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
-        textLabel.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
-        textLabel.hint("Search")
-        textLabel.textAlignment = .center
+        searchTextField = UITextField()
+        searchTextField.backgroundColor = UIColor.lightGray
+        searchTextField.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        searchTextField.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
+        searchTextField.hint("Search")
+        searchTextField.textAlignment = .center
+        searchTextField.delegate = self
         
         //Stack View
         let stackView   = UIStackView(frame: CGRect(x: 0, y: -100, width: displayWidth, height: 100 + barHeight))
@@ -66,7 +75,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         stackView.spacing   = 16.0
         
 
-        stackView.addArrangedSubview(textLabel)
+        stackView.addArrangedSubview(searchTextField)
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         self.view.addSubview(stackView)
@@ -119,15 +128,38 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     
     func setupData() {
-        let transactionOne: Place = Place(title: "Title of Place1", description: "Description of Place1", address: "10/20/2019")
-        let transactionTwo: Place = Place(title: "Title of Place2", description: "Description of Place2", address: "10/20/2019")
-        let transactionThree: Place = Place(title: "Title of Place3", description: "Description of Place3", address: "10/20/2019")
-        let transactionFour: Place = Place(title: "Title of Place4", description: "Description of Place4", address: "10/20/2019")
+        /*
+        let transactionOne: Prediction = Place(title: "Title of Place1", description: "Description of Place1", address: "10/20/2019")
+        let transactionTwo: Prediction = Place(title: "Title of Place2", description: "Description of Place2", address: "10/20/2019")
+        let transactionThree: Prediction = Place(title: "Title of Place3", description: "Description of Place3", address: "10/20/2019")
+        let transactionFour: Prediction = Place(title: "Title of Place4", description: "Description of Place4", address: "10/20/2019")
         
-        placesList.append(transactionOne)
-        placesList.append(transactionTwo)
-        placesList.append(transactionThree)
-        placesList.append(transactionFour)
+        predictionsList.append(transactionOne)
+        predictionsList.append(transactionTwo)
+        predictionsList.append(transactionThree)
+        predictionsList.append(transactionFour)
+        
+        */
+        
+        guard let url = URL(string: Constants.Endpoints.kGetNearbyPlaces) else {
+            return
+        }
+        var request = URLRequest(url: url)
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        // request.setValue("JWT " + storedToken + "", forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else { return }
+            
+            do {
+                self.placesResponse = try JSONDecoder().decode(PlacesResponse.self, from: data)
+                self.predictionsList = self.placesResponse.predictions
+                
+            } catch let jsonErr {
+                print("Error serializing json:", jsonErr)
+            }
+            
+            }.resume()
     }
     
     @IBAction func characterSelected(_ sender: UIButton) {
@@ -156,7 +188,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return placesList.count
+        return predictionsList.count
     }
 
     
@@ -167,12 +199,12 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CupcakeItemCell
         
-        let transaction = self.placesList[indexPath.row]
+        let transaction = self.predictionsList[indexPath.row]
         
         // create the attributed colour
         let attributedStringColor = [NSAttributedString.Key.foregroundColor : UIColor.white];
         // create the attributed string
-        let attributedString = NSAttributedString(string:  transaction.title, attributes: attributedStringColor)
+        let attributedString = NSAttributedString(string:  transaction.predictionDescription, attributes: attributedStringColor)
         // Set the label
         
         // cell?.iconView.sd_setImage(with: URL(string: squash.title), placeholderImage: UIImage(named: Constants.AssetNames.kAssetIcon))
@@ -184,10 +216,10 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell?.titleLabel?.text = String()
         
         cell?.title2Label.textColor = UIColor.black
-        cell?.title2Label.text = String(transaction.title)
+        cell?.title2Label.text = String(transaction.placeID)
         
         cell?.subtitleLabel.textColor = UIColor.gray
-        cell?.subtitleLabel?.text = String(transaction.description)
+        cell?.subtitleLabel?.text = String(transaction.predictionDescription)
         
         cell?.subtitle2Label.textColor = UIColor.gray
         // cell?.subtitle2Label.text = String(squash.squashMatchTime)
@@ -196,7 +228,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         // cell?.actionButton.setTitle(gameDateTime, for: UIControl.State.normal)
         
         cell?.subtitle3Label.textColor = UIColor.gray
-        cell?.subtitle3Label?.text = String(transaction.address)
+        cell?.subtitle3Label?.text = String(transaction.structuredFormatting.mainText)
         
         cell?.backgroundColor = UIColor.clear
         cell?.layoutSubviews()
@@ -217,42 +249,35 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return true
     }
     
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
+    
+    // MARK: - UITextFieldDelegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // self.view.endEditing(true)
+        print("---------------searchTextField textFieldShouldReturn")
         return true
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // self.view.endEditing(true)
+        print("---------------searchTextField was focused--\(String(describing: self.searchTextField.text))")
+        
     }
-    */
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        print("---------------did end editing")
 
+    }
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        // textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        
+        guard let searchStr = self.searchTextField.text else { return }
+        self.searchString = searchStr
+        print("---------------searchTextField was focused--\(self.searchString!)")
+        
+    }
+    
 }

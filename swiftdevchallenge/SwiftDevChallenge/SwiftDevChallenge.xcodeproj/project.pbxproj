@@ -16,8 +16,14 @@
 		4B6685322388EBF30030B8DD /* SwiftDevChallengeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6685312388EBF30030B8DD /* SwiftDevChallengeTests.swift */; };
 		4B66853D2388EBF30030B8DD /* SwiftDevChallengeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B66853C2388EBF30030B8DD /* SwiftDevChallengeUITests.swift */; };
 		4B66854B2388EE0C0030B8DD /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B66854A2388EE0C0030B8DD /* FirstViewController.swift */; };
-		4B66854E2388EF980030B8DD /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B66854D2388EF980030B8DD /* Place.swift */; };
+		4B66854E2388EF980030B8DD /* Prediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B66854D2388EF980030B8DD /* Prediction.swift */; };
 		4B6685512388EFBE0030B8DD /* CupcakeItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6685502388EFBE0030B8DD /* CupcakeItemCell.swift */; };
+		4B6685532389BE2D0030B8DD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6685522389BE2D0030B8DD /* Constants.swift */; };
+		4B6685552389C2210030B8DD /* PlacesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6685542389C2210030B8DD /* PlacesResponse.swift */; };
+		4B6685572389C2DB0030B8DD /* StructuredFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6685562389C2DB0030B8DD /* StructuredFormatting.swift */; };
+		4B6685592389C5180030B8DD /* Term.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6685582389C5180030B8DD /* Term.swift */; };
+		4B66855B2389C5AA0030B8DD /* TypeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B66855A2389C5AA0030B8DD /* TypeElement.swift */; };
+		4B66855D2389C5D10030B8DD /* MatchedSubstring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B66855C2389C5D10030B8DD /* MatchedSubstring.swift */; };
 		8D10B542D8262E0FF2FCFA75 /* Pods_SwiftDevChallengeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C456BFC12BDE4E630924D5 /* Pods_SwiftDevChallengeTests.framework */; };
 		995B7039F6FC7000E07FB461 /* Pods_SwiftDevChallenge_SwiftDevChallengeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A7672E17BD3DB6C18525523 /* Pods_SwiftDevChallenge_SwiftDevChallengeUITests.framework */; };
 /* End PBXBuildFile section */
@@ -57,8 +63,14 @@
 		4B66853C2388EBF30030B8DD /* SwiftDevChallengeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDevChallengeUITests.swift; sourceTree = "<group>"; };
 		4B66853E2388EBF30030B8DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B66854A2388EE0C0030B8DD /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		4B66854D2388EF980030B8DD /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		4B66854D2388EF980030B8DD /* Prediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prediction.swift; sourceTree = "<group>"; };
 		4B6685502388EFBE0030B8DD /* CupcakeItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CupcakeItemCell.swift; sourceTree = "<group>"; };
+		4B6685522389BE2D0030B8DD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4B6685542389C2210030B8DD /* PlacesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesResponse.swift; sourceTree = "<group>"; };
+		4B6685562389C2DB0030B8DD /* StructuredFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructuredFormatting.swift; sourceTree = "<group>"; };
+		4B6685582389C5180030B8DD /* Term.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Term.swift; sourceTree = "<group>"; };
+		4B66855A2389C5AA0030B8DD /* TypeElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeElement.swift; sourceTree = "<group>"; };
+		4B66855C2389C5D10030B8DD /* MatchedSubstring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedSubstring.swift; sourceTree = "<group>"; };
 		7A7672E17BD3DB6C18525523 /* Pods_SwiftDevChallenge_SwiftDevChallengeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftDevChallenge_SwiftDevChallengeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DD755472810865342464294 /* Pods-SwiftDevChallenge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftDevChallenge.debug.xcconfig"; path = "Target Support Files/Pods-SwiftDevChallenge/Pods-SwiftDevChallenge.debug.xcconfig"; sourceTree = "<group>"; };
 		9455B98A421868E5AAD33DF7 /* Pods-SwiftDevChallenge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftDevChallenge.release.xcconfig"; path = "Target Support Files/Pods-SwiftDevChallenge/Pods-SwiftDevChallenge.release.xcconfig"; sourceTree = "<group>"; };
@@ -154,7 +166,13 @@
 		4B66854C2388EF8A0030B8DD /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4B66854D2388EF980030B8DD /* Place.swift */,
+				4B66854D2388EF980030B8DD /* Prediction.swift */,
+				4B6685522389BE2D0030B8DD /* Constants.swift */,
+				4B6685542389C2210030B8DD /* PlacesResponse.swift */,
+				4B6685562389C2DB0030B8DD /* StructuredFormatting.swift */,
+				4B6685582389C5180030B8DD /* Term.swift */,
+				4B66855A2389C5AA0030B8DD /* TypeElement.swift */,
+				4B66855C2389C5D10030B8DD /* MatchedSubstring.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -429,11 +447,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B66855B2389C5AA0030B8DD /* TypeElement.swift in Sources */,
 				4B66851F2388EBF10030B8DD /* ViewController.swift in Sources */,
 				4B66851B2388EBF10030B8DD /* AppDelegate.swift in Sources */,
+				4B6685592389C5180030B8DD /* Term.swift in Sources */,
+				4B66855D2389C5D10030B8DD /* MatchedSubstring.swift in Sources */,
 				4B66854B2388EE0C0030B8DD /* FirstViewController.swift in Sources */,
-				4B66854E2388EF980030B8DD /* Place.swift in Sources */,
+				4B66854E2388EF980030B8DD /* Prediction.swift in Sources */,
 				4B6685512388EFBE0030B8DD /* CupcakeItemCell.swift in Sources */,
+				4B6685572389C2DB0030B8DD /* StructuredFormatting.swift in Sources */,
+				4B6685532389BE2D0030B8DD /* Constants.swift in Sources */,
+				4B6685552389C2210030B8DD /* PlacesResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
