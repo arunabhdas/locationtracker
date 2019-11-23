@@ -1,0 +1,29 @@
+PODS:
+  - Cupcake (1.3.1)
+  - FontAwesome.swift (1.8.2)
+  - RxCocoa (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxSwift (4.5.0)
+
+DEPENDENCIES:
+  - Cupcake
+  - FontAwesome.swift
+  - RxCocoa
+  - RxSwift (~> 4.0)
+
+SPEC REPOS:
+  trunk:
+    - Cupcake
+    - FontAwesome.swift
+    - RxCocoa
+    - RxSwift
+
+SPEC CHECKSUMS:
+  Cupcake: d258b6c0c289f7072340990107892aeb20d3fe98
+  FontAwesome.swift: 7938d6a03113ff3f39001bde7f50be8a0903d605
+  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
+  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+
+PODFILE CHECKSUM: eedac00a8d9271677b9112aee911ad5d729c371f
+
+COCOAPODS: 1.8.4
