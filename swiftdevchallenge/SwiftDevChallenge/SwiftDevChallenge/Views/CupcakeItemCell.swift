@@ -45,7 +45,7 @@ class CupcakeItemCell: UITableViewCell {
         // actionButton = Button.font("15").color(Constants.Colors.colorOptimusOne).border(1, Constants.Colors.colorOptimusTwo).radius(3)
         // actionButton.highColor("white").highBg("darkGray").padding(5, 10)
         
-        subtitle3Label = Label.font(15).color("black").lines(2).str("LeagueMatch").align(.center)
+        subtitle3Label = Label.font(15).color("black").lines(2).str("").align(.center)
         
         let ratingStack = HStack(subtitleLabel, subtitle2Label).gap(5)
         let midStack = VStack(titleLabel, title2Label, ratingStack).gap(4)

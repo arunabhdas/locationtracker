@@ -37,8 +37,14 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var searchTextField: UITextField!
     
+    var searchUrlString: String! = Constants.Endpoints.kGetNearbyPlaces
+    
     var searchString: String! = "" {
         didSet {
+            let escapedString = self.searchString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+            self.searchUrlString = "\(Constants.Endpoints.kGetNearbyPlaces)\(escapedString!)"
+            print("---------------searchTextField was focused--\(self.searchUrlString!)")
+            setupData(self.searchUrlString!)
             
         }
     }
@@ -119,7 +125,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
         
-        setupData()
+        
 
     }
     @objc func dismissKeyboard() {
@@ -127,25 +133,14 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-    func setupData() {
-        /*
-        let transactionOne: Prediction = Place(title: "Title of Place1", description: "Description of Place1", address: "10/20/2019")
-        let transactionTwo: Prediction = Place(title: "Title of Place2", description: "Description of Place2", address: "10/20/2019")
-        let transactionThree: Prediction = Place(title: "Title of Place3", description: "Description of Place3", address: "10/20/2019")
-        let transactionFour: Prediction = Place(title: "Title of Place4", description: "Description of Place4", address: "10/20/2019")
+    func setupData(_ searchFor: String) {
+
         
-        predictionsList.append(transactionOne)
-        predictionsList.append(transactionTwo)
-        predictionsList.append(transactionThree)
-        predictionsList.append(transactionFour)
-        
-        */
-        
-        guard let url = URL(string: Constants.Endpoints.kGetNearbyPlaces) else {
+        guard let url = URL(string: searchFor) else {
             return
         }
         var request = URLRequest(url: url)
-        
+        print("---------------url--\(url)")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         // request.setValue("JWT " + storedToken + "", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -216,7 +211,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell?.titleLabel?.text = String()
         
         cell?.title2Label.textColor = UIColor.black
-        cell?.title2Label.text = String(transaction.placeID)
+        cell?.title2Label.text = String(transaction.structuredFormatting.mainText)
         
         cell?.subtitleLabel.textColor = UIColor.gray
         cell?.subtitleLabel?.text = String(transaction.predictionDescription)
@@ -228,7 +223,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         // cell?.actionButton.setTitle(gameDateTime, for: UIControl.State.normal)
         
         cell?.subtitle3Label.textColor = UIColor.gray
-        cell?.subtitle3Label?.text = String(transaction.structuredFormatting.mainText)
+        // cell?.subtitle3Label?.text = String(transaction.structuredFormatting.mainText)
         
         cell?.backgroundColor = UIColor.clear
         cell?.layoutSubviews()

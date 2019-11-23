@@ -13,6 +13,6 @@ struct Constants {
     
     struct Endpoints {
         
-        static let kGetNearbyPlaces = "https://maps.googleapis.com/maps/api/place/autocomplete/json?types=address&key=AIzaSyDRcHVbQPfzRR7BU69KUyI80zljVQ0jLoA&input=137%20Noe%20Street"
+        static let kGetNearbyPlaces = "https://maps.googleapis.com/maps/api/place/autocomplete/json?types=address&key=AIzaSyDRcHVbQPfzRR7BU69KUyI80zljVQ0jLoA&input="
     }
 }
