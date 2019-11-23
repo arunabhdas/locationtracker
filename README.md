@@ -7,6 +7,6 @@
 
 ## Screenshots
 
-![Screenshot 1](https://raw.githubusercontent.com/arunabhdas/swiftdevchallenge/master/screenshot_1.jpg"Screenshot 1")
+![Screenshot 1](https://raw.githubusercontent.com/arunabhdas/swiftdevchallenge/master/screenshot_1.jpg)
 
-![Screenshot 2](https://raw.githubusercontent.com/arunabhdas/swiftdevchallenge/master/screenshot_2.jpg"Screenshot 2")
+![Screenshot 2](https://raw.githubusercontent.com/arunabhdas/swiftdevchallenge/master/screenshot_2.jpg)
