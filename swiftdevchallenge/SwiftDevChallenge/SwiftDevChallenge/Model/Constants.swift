@@ -20,6 +20,8 @@ struct Constants {
         
         static let kTopNavTitle = "Cover iOS Dev Challenge"
         
+        static let kWhatsYourAddress = "What's your address?"
+        
         static let kNextButtonTitle = "Next"
         
         static let kAlertSuccesTitle = "Success"

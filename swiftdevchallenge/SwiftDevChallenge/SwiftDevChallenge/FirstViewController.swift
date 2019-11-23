@@ -69,7 +69,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         searchTextField.backgroundColor = UIColor.lightGray
         searchTextField.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
         searchTextField.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
-        searchTextField.hint("Search")
+        searchTextField.hint(Constants.Titles.kWhatsYourAddress)
         searchTextField.textAlignment = .center
         searchTextField.delegate = self
         
