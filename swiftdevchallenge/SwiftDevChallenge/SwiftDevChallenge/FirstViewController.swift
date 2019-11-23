@@ -29,7 +29,6 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
-                // self.view.hideToastActivity()
             }
             
         }
@@ -43,22 +42,23 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         didSet {
             let escapedString = self.searchString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
             self.searchUrlString = "\(Constants.Endpoints.kGetNearbyPlaces)\(escapedString!)"
-            print("---------------searchTextField was focused--\(self.searchUrlString!)")
-            setupData(self.searchUrlString!)
+            fetchData(self.searchUrlString!)
             
         }
     }
+    
+    var suggestionSelected: Bool = false
+    
+    var selectedSuggestionString: String! = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print("selectedCharacterVariable : \(selectedCharacterVariable)")
 
-        // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.isTranslucent = false
-        // view.backgroundColor = Constants.Colors.colorPrintexZero
         
-        title = "Portfolio"
+
         let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
@@ -109,40 +109,45 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         // stackView.addArrangedSubview(self.tableView)
         
     
-        self.navigationItem.title = "Cover iOS Dev Challenge"
+        self.navigationItem.title = Constants.Titles.kTopNavTitle
         
-        // self.navigationController?.navigationBar.topItem?.title = "Your Transactions"
-        // self.navigationItem.title = "Your Transactions";
         
-        /*
-        let navBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 100.0))
-        self.view.addSubview(navBar);address
-        let navItem = UINavigationItem(title: "Your Transactions");
-    
-        navBar.setItems([navItem], animated: true);
-        */
+        let keyboardToolbar = UIToolbar()
+        keyboardToolbar.sizeToFit()
+        keyboardToolbar.isTranslucent = false
+        keyboardToolbar.barTintColor = UIColor.white
 
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        view.addGestureRecognizer(tap)
+        let nextButton = UIBarButtonItem(title: Constants.Titles.kNextButtonTitle, style: .plain, target: self, action: #selector(nextButtonTapped))
         
+        nextButton.tintColor = UIColor.red
         
+        let leftFlexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let rightFlexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        keyboardToolbar.items = [leftFlexibleSpace, nextButton, rightFlexibleSpace]
+        searchTextField.inputAccessoryView = keyboardToolbar
 
     }
     @objc func dismissKeyboard() {
         self.view.endEditing(true)
     }
     
+    @objc func nextButtonTapped() {
+        
+        displayAlertDialog(self.suggestionSelected)
+        
+    }
     
-    func setupData(_ searchFor: String) {
+    
+    func fetchData(_ searchFor: String) {
 
         
         guard let url = URL(string: searchFor) else {
             return
         }
         var request = URLRequest(url: url)
-        print("---------------url--\(url)")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        // request.setValue("JWT " + storedToken + "", forHTTPHeaderField: "Authorization")
+
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
             
@@ -157,6 +162,22 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }.resume()
     }
     
+    func displayAlertDialog(_ isSuccess: Bool) {
+            
+        var alert: UIAlertController = UIAlertController()
+        
+        if (isSuccess) {
+            alert = UIAlertController(title: Constants.Titles.kAlertSuccesTitle, message: Constants.Titles.kAlertSuccess, preferredStyle: .alert)
+        } else {
+            alert = UIAlertController(title: Constants.Titles.kAlertErrorTitle, message: Constants.Titles.kAlertError, preferredStyle: .alert)
+        }
+        
+
+        alert.addAction(UIAlertAction(title: Constants.Titles.kAlertOkTitle, style: .default, handler: nil))
+
+        self.present(alert, animated: true)
+    }
+    
     @IBAction func characterSelected(_ sender: UIButton) {
         guard let characterName = sender.titleLabel?.text else {
             return
@@ -164,15 +185,6 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         selectedCharacterVariable.value = characterName
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     // MARK: - Table view data source
 
@@ -194,36 +206,25 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CupcakeItemCell
         
-        let transaction = self.predictionsList[indexPath.row]
+        let prediction = self.predictionsList[indexPath.row]
         
         // create the attributed colour
         let attributedStringColor = [NSAttributedString.Key.foregroundColor : UIColor.white];
         // create the attributed string
-        let attributedString = NSAttributedString(string:  transaction.predictionDescription, attributes: attributedStringColor)
-        // Set the label
-        
-        // cell?.iconView.sd_setImage(with: URL(string: squash.title), placeholderImage: UIImage(named: Constants.AssetNames.kAssetIcon))
-        
-        // cell?.indexLabel.textColor = UIColor.gray
-        // cell?.indexLabel.text = transaction.title
-        
+        let attributedString = NSAttributedString(string:  prediction.predictionDescription, attributes: attributedStringColor)
+
         cell?.titleLabel.textColor = UIColor.black
         cell?.titleLabel?.text = String()
         
         cell?.title2Label.textColor = UIColor.black
-        cell?.title2Label.text = String(transaction.structuredFormatting.mainText)
+        cell?.title2Label.text = String(prediction.structuredFormatting.mainText)
         
         cell?.subtitleLabel.textColor = UIColor.gray
-        cell?.subtitleLabel?.text = String(transaction.predictionDescription)
+        cell?.subtitleLabel?.text = String(prediction.predictionDescription)
         
         cell?.subtitle2Label.textColor = UIColor.gray
-        // cell?.subtitle2Label.text = String(squash.squashMatchTime)
-        
-        // var gameDateTime = "\(squash.squashMatchDate) \(squash.squashMatchTime)"
-        // cell?.actionButton.setTitle(gameDateTime, for: UIControl.State.normal)
         
         cell?.subtitle3Label.textColor = UIColor.gray
-        // cell?.subtitle3Label?.text = String(transaction.structuredFormatting.mainText)
         
         cell?.backgroundColor = UIColor.clear
         cell?.layoutSubviews()
@@ -232,7 +233,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
+
         guard let cell = cell as? CupcakeItemCell else { return }
     }
     
@@ -245,21 +246,27 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        self.suggestionSelected = true
+        let prediction = self.predictionsList[indexPath.row]
+        searchTextField.text = String(prediction.predictionDescription)
+        
+    }
+    
     // MARK: - UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // self.view.endEditing(true)
-        print("---------------searchTextField textFieldShouldReturn")
+        self.view.endEditing(true)
         return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         // self.view.endEditing(true)
-        print("---------------searchTextField was focused--\(String(describing: self.searchTextField.text))")
         
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
-        print("---------------did end editing")
+
 
     }
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -271,7 +278,6 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         guard let searchStr = self.searchTextField.text else { return }
         self.searchString = searchStr
-        print("---------------searchTextField was focused--\(self.searchString!)")
         
     }
     
