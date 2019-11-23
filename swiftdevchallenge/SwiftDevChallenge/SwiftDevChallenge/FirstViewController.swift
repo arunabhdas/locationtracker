@@ -107,7 +107,18 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         navBar.setItems([navItem], animated: true);
         */
 
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
         
+        setupData()
+
+    }
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
+    }
+    
+    
+    func setupData() {
         let transactionOne: Place = Place(title: "Title of Place1", description: "Description of Place1", address: "10/20/2019")
         let transactionTwo: Place = Place(title: "Title of Place2", description: "Description of Place2", address: "10/20/2019")
         let transactionThree: Place = Place(title: "Title of Place3", description: "Description of Place3", address: "10/20/2019")
