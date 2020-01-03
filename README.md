@@ -10,7 +10,7 @@
 
 ### Screenshot 1 | Partial Search
 
-![Screenshot 1](https://raw.githubusercontent.com/arunabhdas/swiftdevchallenge/master/screenshot_1.jpg?token=AADGYSI7NMWMVDOJDI643EC53GZOQ)
+![Screenshot 1](https://raw.githubusercontent.com/arunabhdas/swiftdevchallenge/master/screenshot_1.jpg?token=AADGYSME73RTDFBU3WIU5I26B5PII)
 
 
 ### Screenshot 1 | Initial Screen
