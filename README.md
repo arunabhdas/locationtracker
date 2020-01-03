@@ -15,4 +15,4 @@
 
 ### Screenshot 1 | Initial Screen
 
-![Screenshot 2](https://raw.githubusercontent.com/arunabhdas/swiftdevchallenge/master/screenshot_2.jpg?token=AADGYSJCAPE6DF363JODU2253GZSK)
+![Screenshot 2](https://raw.githubusercontent.com/arunabhdas/swiftdevchallenge/master/screenshot_2.jpg?token=AADGYSMP4QBV7ZZZPOAREKC6B5PKC)
