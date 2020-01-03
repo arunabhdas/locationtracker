@@ -1,5 +1,5 @@
 
-# Cover iOS Dev Challenge
+# LocationTracker
 
 ## Notes
 
